@@ -34,6 +34,8 @@ void setup() {
     //while (1) { delay(10); }
   }
   Serial.println("----------Starting reading----------");
+  Serial.println("Thrust\tTorque\tVoltage\tCurrent\tPower");
+  
 }
 
 void loop() 
@@ -46,16 +48,15 @@ void loop()
   current_mA = ina219.getCurrent_mA();
   power_mW = ina219.getPower_mW();
   
-  Serial.print("Thrust=");
   Serial.print(thrust.get_units(), 2);
-  Serial.print("g Torque=");
+  Serial.print("\t");
   Serial.print(torque.get_units(), 2);
-  Serial.println(" g");
-
-  Serial.print("Bus Voltage:   "); Serial.print(busvoltage); 
-  Serial.print("V Current="); Serial.print(current_mA); 
-  Serial.print("mA Power="); Serial.print(power_mW); 
-  Serial.println("mW");
+  Serial.print("\t");
+  Serial.print(busvoltage); 
+  Serial.print("\t");
+  Serial.print(current_mA); 
+  Serial.print("\t");
+  Serial.print(power_mW); 
   Serial.println("");
   
   if(Serial.available())
@@ -67,6 +68,11 @@ void loop()
       thrust.tare();
       torque.set_scale(torque_cf);
       torque.tare();
+      if (! ina219.begin()) 
+      {
+        Serial.println("Failed to find INA219 chip");
+        //while (1) { delay(10); }
+      }
       Serial.println("Tare done");
     }
   }
