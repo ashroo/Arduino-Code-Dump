@@ -1,8 +1,8 @@
 #include <AccelStepper.h>
-#define dirPin 2
-#define stepPin 3
-#define dirPin2 4
-#define stepPin2 5
+#define dirPin PB5
+#define stepPin PB9
+#define dirPin2 PA15
+#define stepPin2 PB8
 #define motorInterfaceType 1
 float p;
 float y;
@@ -18,7 +18,7 @@ stepper_yaw.setMaxSpeed(5000);
 stepper_yaw.setAcceleration(8000);
 stepper_pitch.setMaxSpeed(1000);
 stepper_pitch.setAcceleration(8000);
-Serial.begin(57600);
+Serial.begin(115200);
 p=0.0;
 y=0.0;
 }
@@ -44,7 +44,7 @@ if(Serial.available() != 0)
     while(Serial.available() == 0);
     y=Serial.parseInt();
     y=(y*6400)/360;
-    y=y*11;
+    //y=y*11;
     Serial.println(y);
   }
 }
